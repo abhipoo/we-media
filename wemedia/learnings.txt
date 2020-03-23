@@ -1,0 +1,22 @@
+Equivalent of SQL 'where in' in django ORM
+
+reference - https://stackoverflow.com/questions/5949986/django-query-where-in
+
+SQL:
+
+select *
+from discuss_topic a
+where id in
+(
+select target_id 
+from discuss_relation b
+where b.source_id = 7
+)
+
+
+ORM :
+
+target_ids = list(relation.objects.filter(source_id = 7).values_list('target_id', flat = True))
+
+result = topic.objects.filter(id__in = target_ids)
+

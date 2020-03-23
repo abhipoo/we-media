@@ -1,0 +1,64 @@
+{% load static %}
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
+</head>
+
+<body>
+	<div class='col-lg-12'>
+		<div class='row'>
+			<div class='col-lg-6' id="Points">
+				<br>
+				Topic Title : {{ topic.title }}
+
+				<br>
+				<br>
+
+				Description : {{ topic.description }}
+
+				<br>
+				<br>
+
+
+				<h3>Points</h3>
+
+				<p>Add your point:</p>
+				<form action="{% url 'add_point' topic.id %}" method="post">
+					{% csrf_token %}
+					{{ form }}
+					<input type="submit" value="Submit">
+				</form>
+
+				<br>
+
+				{% if points %}
+				{% for topic in points %}
+				<li><a href="{% url 'discuss' topic.id %}">{{ topic.title }}</a></li>
+				{% endfor %}
+				{% endif %}
+			</div>
+
+
+
+			<div class='col-lg-6' id="Counterpoints">
+				<h3>Counterpoints</h3>
+
+				<p>Add your point:</p>
+				<form action="{% url 'add_counterpoint' topic.id %}" method="post">
+					{% csrf_token %}
+					{{ form }}
+					<input type="submit" value="Submit">
+				</form>
+				<br>
+
+				{% if counterpoints %}
+				{% for topic in counterpoints %}
+				<li><a href="{% url 'discuss' topic.id %}">{{ topic.title }}</a></li>
+				{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
