@@ -1,0 +1,20 @@
+<html>
+<head>
+</head>
+
+<body>
+	<div class='col-lg-12'>
+		<br>
+		This template displays page for recommending content.
+
+		<br>
+		<br>
+
+		<form action="{% url 'create_content' %}" method="post">
+			{% csrf_token %}
+			{{ form }}
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</body>
+</html>

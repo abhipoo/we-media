@@ -1,0 +1,35 @@
+{% load static %}
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
+</head>
+
+<body>
+	<div class='col-lg-12'>
+		<div class='row'>
+			<div class='col-lg-6' id="Points">
+				<br>
+
+				<h3>All topics</h3>
+				
+				<br>
+
+				{% if topics %}
+				{% for topic in topics %}
+				<li><a href="{% url 'discuss' topic.id %}">{{ topic.title }}</a></li>
+				{% endfor %}
+				{% endif %}
+
+				<br>
+
+			</div>
+
+
+
+			<div class='col-lg-6' id="Counterpoints">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+Ask for a recommendation -
+
+The coronavirus scare feels like a warlike situation now. With curbs on travel, and falling state of economy, the prices of day to day commodities seem to be increasing. Who governs the price increase ? Also, I'd like to read / watch about how we function as a society. We take a lot of stuff for granted.. like how the food on my table reached me. And how other basic necessities like electricity and internet continue to work in the face of a disaster.    
+
+
+******
+
+shell commands
+
+from discuss.models import topic, content, context
+
+********
+
+dhananjoy
+
+A riveting courtroom drama
+
+************
+
+Unconventional use cases - 
+
+autocar india forum
+Siddhu stocks suggestion
+

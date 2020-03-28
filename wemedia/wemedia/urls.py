@@ -19,6 +19,7 @@ from discuss import views
 
 urlpatterns = [
 	path('create_topic/', views.create_topic, name='create_topic'),
+	path('create_content/', views.create_content, name='create_content'),
 	path('discuss/', include('discuss.urls')),
     path('admin/', admin.site.urls),
 ]
