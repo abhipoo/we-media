@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import CreateTopicForm, CreateContentForm
-from .models import topic, relation, content
+from .forms import CreateTopicForm, CreateContentForm, AskRecommendationForm, SuggestionForm
+from .models import topic, relation, content, content_types, ask, suggestion
+from django.shortcuts import get_object_or_404
 
 #Create your views here.
 def create_topic(request):
@@ -40,8 +41,9 @@ def create_content(request):
             form.save_m2m()
 
             #redirect to new created content
-            return discuss_content(request, post.id) #Help - How to change URL to /discuss/content/content_id
+            return view_content(request, post.id) #Help - How to change URL to /discuss/content/content_id
         else:
+            #Todo - Send form.errors to show in frontend popup.
             print("Form invalid")
             print(form.errors)
 
@@ -90,7 +92,7 @@ def discuss(request, topic_id):
 
     return render(request, 'discuss/discuss.html', context)
 
-def discuss_content(request, content_id):
+def view_content(request, content_id):
     #return HttpResponse("View content for id " + str(content_id))
 
     content_object = content.objects.get(pk = content_id)
@@ -105,7 +107,7 @@ def discuss_content(request, content_id):
         'related_content' : related_content
     }
 
-    return render(request, 'discuss/content.html', context)
+    return render(request, 'discuss/view_content.html', context)
 
 
 def add_point(request, topic_id):
@@ -138,6 +140,68 @@ def add_counterpoint(request, topic_id):
         print(form.errors)
 
     return discuss(request, topic_id)
+
+#separate app
+def ask_recommendation(request):
+    #return HttpResponse("Ask for a content recommendation")
+    if request.method=='POST':
+        form = AskRecommendationForm(request.POST)
+        if form.is_valid():
+            ask_form = form.save(commit=False)
+            #ask_form.user = request.user
+
+            ask_form.save()
+            form.save_m2m() # needed since using commit=False
+
+            return view_ask(request, ask_form.id)
+        else:
+            print("Form invalid")
+            print(form.errors)
+
+    form = AskRecommendationForm()
+
+    context = {
+        'form' : form
+    }
+    
+    return render(request, 'discuss/ask_recommendation.html', context)
+
+def view_ask(request, ask_id):
+    #return HttpResponse("Ask id" + str(ask_id))
+
+    #ask_object = ask.objects.get(pk = ask_id)
+    ask_object = get_object_or_404(ask, pk=ask_id)
+
+    content_types = list(ask_object.content_choices.all().values_list('title', flat = True))
+
+    form = SuggestionForm()
+
+    suggestions = suggestion.objects.filter(ask_id = ask_id)
+
+    context = {
+        'ask' : ask_object,
+        'content_types' : content_types,
+        'form' : form,
+        'suggestions' : suggestions
+    }
+
+    return render(request, 'discuss/view_ask.html', context)
+
+
+def add_suggestion(request, ask_id):
+    #return HttpResponse("Button for adding point")
+    form = SuggestionForm(request.POST)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.ask_id = ask_id #Check if this works after fixing class names - post.ask = ask_id
+        post.save()
+    else:
+        print("Form invalid")
+        print(form.errors)
+
+    return view_ask(request, ask_id)
+
+
 
 
 #helper functions

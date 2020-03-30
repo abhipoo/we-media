@@ -1,12 +1,33 @@
 from django import forms
-from .models import topic, content
+from .models import topic, content, content_types, ask, suggestion
 
 class CreateTopicForm(forms.ModelForm):
-	class Meta:
-		model = topic
-		exclude = ('is_op',)
+    class Meta:
+        model = topic
+        exclude = ('is_op',)
 
-class CreateContentForm(forms.ModelForm):
-	class Meta:
-		model = content
-		exclude = ('contexts',)
+class CreateContentForm(forms.ModelForm):  
+    class Meta:
+        model = content
+        exclude = ('contexts',)
+
+    def clean(self):
+        cleaned_data = super(CreateContentForm, self).clean()
+        title = cleaned_data.get("title")
+        creator = cleaned_data.get("creator")
+
+        if not title and not creator:  # This will check for None or Empty
+            raise forms.ValidationError('Even one of title or creator should have a value.')
+
+#separate app
+class AskRecommendationForm(forms.ModelForm):
+    content_choices = forms.ModelMultipleChoiceField(queryset=content_types.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = ask
+        exclude = ('',)
+
+class SuggestionForm(forms.ModelForm):
+    class Meta:
+        model = suggestion
+        exclude = ('ask', )

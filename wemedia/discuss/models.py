@@ -2,6 +2,16 @@ from django.db import models
 
 # Create your models here.
 class topic(models.Model):
+    '''
+    need to decouple this model into two models -->
+
+    topic -> An idea or a concept. Example : fantasy, anxiety
+    Fields : title, description
+
+    comment / thread -> Free text.
+    Fields : description, is_op (initiator of discussion)
+
+    '''
     title = models.CharField(max_length = 1000)
     description = models.CharField(max_length = 10000, default=None, blank=True, null=True)
     is_op = models.BooleanField(default=None, blank=True, null=True)
@@ -31,9 +41,21 @@ class content(models.Model):
     def __str__(self):
         return self.title
 
-    def clean(self):
-        #Need to test this !!
-        if not self.title and not self.creator:  # This will check for None or Empty
-            raise ValidationError({'title': _('Even one of title or creator should have a value.')})
+#separate app
+class content_types(models.Model):
+    title = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.title
+
+class ask(models.Model):
+    content_choices = models.ManyToManyField(content_types)
+    description = models.CharField(max_length = 1000, default=None, blank=True, null=True)
+
+class suggestion(models.Model):
+    description = models.CharField(max_length = 10000)
+    ask = models.ForeignKey(ask, on_delete = models.CASCADE)
+
+
 
 
