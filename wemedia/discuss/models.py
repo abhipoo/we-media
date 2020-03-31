@@ -57,5 +57,19 @@ class suggestion(models.Model):
     ask = models.ForeignKey(ask, on_delete = models.CASCADE)
 
 
+#separate app
+class Comment(models.Model):
+    description = models.CharField(max_length = 10000)
+    is_op = models.BooleanField()
+
+    def __str__(self):
+        return self.description
+
+class Comment_relation(models.Model):
+    source = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name = 'sources')
+    target = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name = 'targets')
+    relation_type = models.CharField(max_length = 100)
+
+
 
 

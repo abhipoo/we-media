@@ -24,8 +24,9 @@ SECRET_KEY = '4ojlgnuxy=g7@!fv4^oo#o##&@ti(=&h!5c++&$_lt)k=bop!t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#DEBUG = False
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
