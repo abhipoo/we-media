@@ -1,10 +1,10 @@
 from django import forms
-from .models import topic, content, content_types, ask, suggestion, Comment
+from .models import Topic, content, content_types, ask, suggestion, Comment
 
 class CreateTopicForm(forms.ModelForm):
     class Meta:
-        model = topic
-        exclude = ('is_op',)
+        model = Topic
+        exclude = ('',)
 
 class CreateContentForm(forms.ModelForm):  
     class Meta:
@@ -36,4 +36,4 @@ class SuggestionForm(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ('is_op',)
+        exclude = ('is_op', 'topics')

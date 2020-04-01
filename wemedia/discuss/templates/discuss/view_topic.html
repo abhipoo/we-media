@@ -1,0 +1,69 @@
+{% load static %}
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
+</head>
+
+<body>
+	<div class='col-lg-12'>
+		<div class='row'>
+			<div class='col-lg-6' id="Points">
+				<br>
+				<h1>{{ topic.title }}</h1>
+
+				<br>
+				<br>
+
+				<h6>{{ topic.description }}</h6>
+
+				<br>
+				<br>
+
+
+				<hr>
+
+				{%if discussions%}
+				<h4>Discussions :</h4>
+				{%for discussion in discussions%}
+				<a href = "{% url 'discussion' discussion.id %}">{{discussion.description}}</a>
+				{%endfor%}
+				{%endif%}
+			
+				<br>
+				<br>
+
+				<h4>Recommendations on this topic :</h4>
+
+				{% if recommendations %}
+				{% for content in recommendations %}
+				<li><a href="{% url 'content' content.id %}">{{ content.title }}</a></li>
+				{% endfor %}
+				{% endif %}
+
+				<br>
+			</div>
+
+
+
+			<div class='col-lg-6' id="Counterpoints">
+				
+				<br>
+
+				<p>Create new discussion</p>
+				<form action="{% url 'create_discussion_on_topic' topic.id %}" method="post">
+					{% csrf_token %}
+					{{ discussion_form }}
+					<input type="submit" value="Submit">
+				</form>
+
+				<br>
+				<br>
+
+				<a href = "#">Add new recommendation</a>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

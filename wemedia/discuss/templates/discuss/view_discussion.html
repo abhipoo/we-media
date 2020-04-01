@@ -11,6 +11,13 @@
 			<div class='col-lg-6' id="Points">
 				<br>
 
+				{%if topics%}
+				Topics:
+				{%for topic in topics%}
+				<a href = "{% url 'view_topic' topic.id %}">{{topic.title}}</a>
+				{%endfor%}
+				{%endif%}
+
 				{% if parent_id != -1  %}
 				<a href="{% url 'discussion' parent_id %}">Parent comment</a>	
 				{% endif %}
