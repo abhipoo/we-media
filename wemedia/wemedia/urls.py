@@ -18,6 +18,7 @@ from django.urls import include, path
 from discuss import views
 
 urlpatterns = [
+	path('', views.index, name='index'),
 	path('create_topic/', views.create_topic, name='create_topic'),
 	path('create_content/', views.create_content, name='create_content'),
 	path('ask_recommendation/', views.ask_recommendation, name = 'ask_recommendation'),

@@ -1,77 +1,80 @@
-{% load static %}
+{% extends 'discuss/base.html' %}
 
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
-</head>
+{% block content %}
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
+			<h4>Discussion</h4>
+			<hr>
 
-<body>
-	<div class='col-lg-12'>
-		<div class='row'>
-			<div class='col-lg-6' id="Points">
-				<br>
+			{%if topics%}
+			Topics:
+			{%for topic in topics%}
+			<a href = "{% url 'view_topic' topic.id %}">{{topic.title}}</a>
+			{%endfor%}
+			{%endif%}
 
-				{%if topics%}
-				Topics:
-				{%for topic in topics%}
-				<a href = "{% url 'view_topic' topic.id %}">{{topic.title}}</a>
-				{%endfor%}
-				{%endif%}
+			{%if contents%}
+			Contents:
+			{%for content in contents%}
+			<a href = "{% url 'content' content.id %}">{{content.title}}</a>
+			{%endfor%}
+			{%endif%}
 
-				{% if parent_id != -1  %}
-				<a href="{% url 'discussion' parent_id %}">Parent comment</a>	
-				{% endif %}
+			{% if parent_id != -1  %}
+			<a href="{% url 'discussion' parent_id %}">Parent comment</a>	
+			{% endif %}
 
-				<br>
+			<br>
 
-				<h2>{{ comment.description }}</h2>
+			<h2>{{ comment.description }}</h2>
 
-				<br>
-				<br>
+			<br>
+			<br>
 
-				<h3>Points</h3>
+			<h3>Points</h3>
 
-				<p>Add your point:</p>
-				<form action="{% url 'add_point' comment.id %}" method="post">
-					{% csrf_token %}
-					{{ form }}
-					<input type="submit" value="Submit">
-				</form>
+			<p>Add your point:</p>
+			<form action="{% url 'add_point' comment.id %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
 
-				<br>
+			<br>
 
-				{% if points %}
-				{% for comment in points %}
-				<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
-				{% endfor %}
-				{% endif %}
+			{% if points %}
+			{% for comment in points %}
+			<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
+			{% endfor %}
+			{% endif %}
 
-				<br>				
-			</div>
+			<br>				
+		</div>
 
 
 
-			<div class='col-lg-6' id="Counterpoints">
-				<br>
-				<h3>Counterpoints</h3>
+		<div class='col-lg-6' id="Counterpoints">
+			<br>
+			<h3>Counterpoints</h3>
 
-				<p>Add your point:</p>
-				<form action="{% url 'add_counterpoint' comment.id %}" method="post">
-					{% csrf_token %}
-					{{ form }}
-					<input type="submit" value="Submit">
-				</form>
-				<br>
+			<p>Add your point:</p>
+			<form action="{% url 'add_counterpoint' comment.id %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
+			<br>
 
-				{% if counterpoints %}
-				{% for comment in counterpoints %}
-				<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
-				{% endfor %}
-				{% endif %}
+			{% if counterpoints %}
+			{% for comment in counterpoints %}
+			<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
+			{% endfor %}
+			{% endif %}
 
-				<br>
-			</div>
+			<br>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

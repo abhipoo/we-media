@@ -6,6 +6,11 @@ from django.shortcuts import get_object_or_404
 
 #Create your views here.
 
+#Homepage
+def index(request):
+    #return HttpResponse("Homepage, bitchh")
+    return render(request, 'discuss/index.html')
+
 #Topic app
 def create_topic(request):
     #return HttpResponse("Create new discussion")
@@ -63,7 +68,11 @@ def view_topic(request, topic_id):
 def show_all_topics(request):
     #return HttpResponse("Shows all topics")
     topics = Topic.objects.all()
-    context = {'topics' : topics}
+    form = CreateTopicForm()
+    context = {
+    'topics' : topics,
+    'form' : form
+    }
     return render(request, 'discuss/all_topics.html', context)
 
 
@@ -104,20 +113,28 @@ def view_content(request, content_id):
 
     related_content = get_related_content(content_object)
 
+    discussion_form = CreateCommentForm()
+
+    discussions = content_object.comments.all()
+
     context = {
         'content' : content_object,
         'topics' : topics,
-        'related_content' : related_content
+        'related_content' : related_content,
+        'discussion_form' : discussion_form,
+        'discussions' : discussions
     }
 
     return render(request, 'discuss/view_content.html', context)
 
 def show_all_content(request):
-    #return HttpResponse("Shows all content")
     contents = content.objects.all()
-    context = {'contents' : contents}
+    form = CreateContentForm(request.POST)
+    context = {
+    'contents' : contents,
+    'form' : form
+    }
     return render(request, 'discuss/all_content.html', context)
-
 
 #separate app - suggestions / recommendations
 def ask_recommendation(request):
@@ -179,6 +196,18 @@ def add_suggestion(request, ask_id):
 
     return view_ask(request, ask_id)
 
+def show_all_asks(request):
+    #return HttpResponse("Shows all content")
+    asks = ask.objects.all()
+    form = AskRecommendationForm()
+    context = {
+        'asks' : asks,
+        'form' : form
+    }
+
+    return render(request, 'discuss/all_asks.html', context)
+
+
 #seperate app - discussions
 def create_discussion(request):
     #return HttpResponse("Create new discussion")
@@ -229,6 +258,33 @@ def create_discussion_on_topic(request, topic_id):
 
     return render(request, 'discuss/create_discussion.html', context)
 
+def create_discussion_on_content(request, content_id):
+    #return HttpResponse("Create new discussion")
+    if request.method == 'POST':
+        form = CreateCommentForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.is_op = True
+            post.save()
+
+            #get topic from topic id
+            content_obj = content.objects.get(pk = content_id)
+
+            post.contents.add(content_obj)
+
+            #redirect to new created topic
+            return view_discussion(request, post.id) #Help - How to change URL to /discuss/topic_id
+        else:
+            print("Form invalid")
+            print(form.errors)
+
+    form = CreateCommentForm()
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'discuss/create_discussion.html', context)
+
 
 def view_discussion(request, comment_id):
     #return HttpResponse("View discussion for id " + str(topic_id))
@@ -246,17 +302,31 @@ def view_discussion(request, comment_id):
 
     topics = comment_object.topics.all()
 
+    contents = comment_object.contents.all()
+
     context = {
         'comment' : comment_object,
         'form' : form, 
         'points' : points,
         'counterpoints' : counterpoints,
         'parent_id' : parent_id,
-        'topics' : topics
+        'topics' : topics,
+        'contents' : contents
         #'recommendations' : recommendations
     }
 
     return render(request, 'discuss/view_discussion.html', context)
+
+def show_all_discussions(request):
+    #return HttpResponse("Shows all content")
+    discussions = Comment.objects.filter(is_op = 1)
+    form = CreateCommentForm()
+    context = {
+        'discussions' : discussions,
+        'form' : form
+    }
+
+    return render(request, 'discuss/all_discussions.html', context)
 
 
 def add_point(request, comment_id):

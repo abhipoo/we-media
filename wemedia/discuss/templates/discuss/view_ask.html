@@ -1,54 +1,49 @@
-{% load static %}
+{% extends 'discuss/base.html' %}
 
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
-</head>
-
-<body>
-	<div class='col-lg-12'>
-		<div class='row'>
-			<div class='col-lg-6' id="Points">
-				<br>
-
+{% block content %}
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
+			<h4>Recommendation request</h4>
+			<hr>
+			<row>
 				<h4>Looking for :</h4> 
 				{% for content_type in content_types %}
 				<button type="button" class="btn btn-primary">
-				{{ content_type }}
+					{{ content_type }}
 				</button>
 				{% endfor %}
-				<br>
-				<br>
+			</row>
+			<br>
+			<br>
 
-				<h4>Description : </h4>
+			<h4>Description : </h4>
 
-				{{ask.description}}
+			<h6>{{ask.description}}</h6>
 
-				<br>
+			<br>
 
-				<hr>
+			<hr>
 
-				<h3>Recommendations</h3>
+			<h3>Recommendations</h3>
 
-				<p>Add your recommendations:</p>
-				<form action="{% url 'add_suggestion' ask.id %}" method="post">
-					{% csrf_token %}
-					{{ form }}
-					<input type="submit" value="Submit">
-				</form>
-
-				<hr>
-
-				{% for suggestion in suggestions %}
-				<li>{{suggestion.description}}</li>
-				{% endfor %}
-			</div>
+			{% for suggestion in suggestions %}
+			<li>{{suggestion.description}}</li>
+			{% endfor %}
+		</div>
 
 
 
-			<div class='col-lg-6' id="Counterpoints">
-			</div>
+		<div class='col-lg-6' id="Counterpoints">
+			<br>
+			<h4>Add your recommendation:</h4>
+			<form action="{% url 'add_suggestion' ask.id %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

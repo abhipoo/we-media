@@ -1,69 +1,65 @@
-{% load static %}
+{% extends 'discuss/base.html' %}
 
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
-</head>
+{% block content %}	
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
+			<h4>Topic</h4>
+			<hr>
+			<h1>{{ topic.title }}</h1>
 
-<body>
-	<div class='col-lg-12'>
-		<div class='row'>
-			<div class='col-lg-6' id="Points">
-				<br>
-				<h1>{{ topic.title }}</h1>
+			<br>
+			<br>
 
-				<br>
-				<br>
+			{%if topic.description%}
+			<h6>{{ topic.description }}</h6>
+			{%endif%}
 
-				<h6>{{ topic.description }}</h6>
-
-				<br>
-				<br>
-
-
-				<hr>
-
-				{%if discussions%}
-				<h4>Discussions :</h4>
-				{%for discussion in discussions%}
-				<a href = "{% url 'discussion' discussion.id %}">{{discussion.description}}</a>
-				{%endfor%}
-				{%endif%}
-			
-				<br>
-				<br>
-
-				<h4>Recommendations on this topic :</h4>
-
-				{% if recommendations %}
-				{% for content in recommendations %}
-				<li><a href="{% url 'content' content.id %}">{{ content.title }}</a></li>
-				{% endfor %}
-				{% endif %}
-
-				<br>
-			</div>
+			<br>
+			<br>
 
 
+			<hr>
 
-			<div class='col-lg-6' id="Counterpoints">
-				
-				<br>
+			{%if discussions%}
+			<h4>Discussions :</h4>
+			{%for discussion in discussions%}
+			<a href = "{% url 'discussion' discussion.id %}">{{discussion.description}}</a>
+			{%endfor%}
+			{%endif%}
 
-				<p>Create new discussion</p>
-				<form action="{% url 'create_discussion_on_topic' topic.id %}" method="post">
-					{% csrf_token %}
-					{{ discussion_form }}
-					<input type="submit" value="Submit">
-				</form>
+			<br>
+			<br>
 
-				<br>
-				<br>
+			<h4>Recommendations on this topic :</h4>
 
-				<a href = "#">Add new recommendation</a>
+			{% if recommendations %}
+			{% for content in recommendations %}
+			<li><a href="{% url 'content' content.id %}">{{ content.title }}</a></li>
+			{% endfor %}
+			{% endif %}
 
-			</div>
+			<br>
+		</div>
+
+
+
+		<div class='col-lg-6' id="Counterpoints">
+
+			<br>
+
+			<h4>Start a new discussion on this topic</h4>
+			<br>
+			<form action="{% url 'create_discussion_on_topic' topic.id %}" method="post">
+				{% csrf_token %}
+				{{ discussion_form }}
+				<input type="submit" value="Submit">
+			</form>
+
+			<br>
+
 		</div>
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

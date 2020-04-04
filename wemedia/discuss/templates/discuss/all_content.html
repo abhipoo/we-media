@@ -1,34 +1,39 @@
-{% load static %}
+{% extends 'discuss/base.html' %}
 
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
-</head>
+{% block content %}
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
 
-<body>
-	<div class='col-lg-12'>
-		<div class='row'>
-			<div class='col-lg-6' id="Points">
-				<br>
-				
-				All Content
+			<h3>Recommendations</h3>
 
-				<br>
+			<br>
 
-				{% if contents %}
-				{% for content in contents %}
-				<li><a href="{% url 'content' content.id %}">{{ content.title }}</a> 
-					{% if content.creator %}
-					by <a href="#">{{ content.creator }}</a>
-					{% endif %}
-				</li>
-				{% endfor %}
+			{% if contents %}
+			{% for content in contents %}
+			<li><a href="{% url 'content' content.id %}">{{ content.title }}</a> 
+				{% if content.creator %}
+				by <a href="#">{{ content.creator }}</a>
 				{% endif %}
-			</div>
+			</li>
+			{% endfor %}
+			{% endif %}
+		</div>
 
-			<div class='col-lg-6' id="Counterpoints">
-			</div>
+		<div class='col-lg-6' id="Counterpoints">
+			<br>
+
+			<h4>Add new recommendation</h4>
+
+			<br>
+			<form action="{% url 'create_content' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
+			<br>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

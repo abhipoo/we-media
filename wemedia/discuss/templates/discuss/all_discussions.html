@@ -1,0 +1,37 @@
+{% extends 'discuss/base.html' %}
+
+{% block content %}
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
+
+			<h3>Discussions</h3>
+
+			<br>
+
+			{% if discussions %}
+			{% for discussion in discussions %}
+			<li><a href="{% url 'discussion' discussion.id %}">{{ discussion.description }}</a></li>
+			{% endfor %}
+			{% endif %}
+
+			<br>
+
+		</div>
+
+		<div class='col-lg-6' id="Counterpoints">
+			<br>
+			<h4>Start a new discussion</h4>
+
+			<br>
+
+			<form action="{% url 'create_discussion' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

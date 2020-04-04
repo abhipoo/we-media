@@ -1,35 +1,37 @@
-{% load static %}
+{% extends 'discuss/base.html' %}
 
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{% static 'discuss/bootstrap.min.css' %}">
-</head>
+{% block content %}
 
-<body>
-	<div class='col-lg-12'>
-		<div class='row'>
-			<div class='col-lg-6' id="Points">
-				<br>
+<div class='col-lg-12'>
+	<div class='row'>
+		<div class='col-lg-6' id="Points">
+			<br>
 
-				<h3>All topics</h3>
-				
-				<br>
+			<h3>Topics</h3>
 
-				{% if topics %}
-				{% for topic in topics %}
-				<li><a href="{% url 'discuss' topic.id %}">{{ topic.title }}</a></li>
-				{% endfor %}
-				{% endif %}
+			<br>
 
-				<br>
+			{% if topics %}
+			{% for topic in topics %}
+			<li><a href="{% url 'view_topic' topic.id %}">{{ topic.title }}</a></li>
+			{% endfor %}
+			{% endif %}
 
-			</div>
+			<br>
+
+		</div>
 
 
 
-			<div class='col-lg-6' id="Counterpoints">
-			</div>
+		<div class='col-lg-6' id="Counterpoints">
+			<br>
+			<h4>Create new topic</h4>
+			<form action="{% url 'create_topic' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

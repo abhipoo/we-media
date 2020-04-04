@@ -4,13 +4,14 @@ from .models import Topic, content, content_types, ask, suggestion, Comment
 class CreateTopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        exclude = ('',)
+        exclude = ('description',)
 
 class CreateContentForm(forms.ModelForm):  
     class Meta:
         model = content
-        exclude = ('contexts',)
+        exclude = ('contexts', 'topics', 'related_content', 'creator')
 
+    '''
     def clean(self):
         cleaned_data = super(CreateContentForm, self).clean()
         title = cleaned_data.get("title")
@@ -18,6 +19,7 @@ class CreateContentForm(forms.ModelForm):
 
         if not title and not creator:  # This will check for None or Empty
             raise forms.ValidationError('Even one of title or creator should have a value.')
+    '''
 
 #separate app - Suggestions
 class AskRecommendationForm(forms.ModelForm):
@@ -36,4 +38,4 @@ class SuggestionForm(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ('is_op', 'topics')
+        exclude = ('is_op', 'topics', 'contents')

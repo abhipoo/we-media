@@ -57,6 +57,7 @@ class Comment(models.Model):
     description = models.CharField(max_length = 10000)
     is_op = models.BooleanField()
     topics = models.ManyToManyField(Topic, blank = True, related_name = 'comments')
+    contents = models.ManyToManyField(content, blank = True, related_name = 'comments')
 
     def __str__(self):
         return self.description

@@ -20,3 +20,12 @@ target_ids = list(relation.objects.filter(source_id = 7).values_list('target_id'
 
 result = topic.objects.filter(id__in = target_ids)
 
+
+**********
+
+Challenges - 
+
+How to keep style consistent across html pages ? 
+eg : Did i use <h4> or <h3> in the counterpart page ? Can a base template technique be used ?
+
+
