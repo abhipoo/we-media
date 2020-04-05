@@ -7,7 +7,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = 'wemedia.settings'
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-from discuss.models import topic, content
+from discuss.models import Topic, content
 
 
 #user input
@@ -96,11 +96,11 @@ def parse_into_topic_object(topic_string):
     Returns existing or else newly created topic object 
     '''
     try:
-        topic_object = topic.objects.get(title=topic_string)
+        topic_object = Topic.objects.get(title=topic_string)
         return topic_object
     except topic.DoesNotExist:
         #persist new entry into db
-        topic_object = topic(title = topic_string)
+        topic_object = Topic(title = topic_string)
         topic_object.save()
         return topic_object
 
