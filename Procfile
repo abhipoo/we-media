@@ -1,1 +1,1 @@
-web: gunicorn wemedia.wsgi --log-file -
+web: gunicorn --pythonpath wemedia wemedia.wsgi --log-file -
