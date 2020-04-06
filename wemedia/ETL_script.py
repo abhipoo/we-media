@@ -18,7 +18,11 @@ filename = input("Please input filename inside data folder (without extention) :
 #File pick test
 try:
     print(os.listdir())
-    df_input = pd.read_excel('wemedia\\data\\' + filename + '.xlsx')
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    my_file = os.path.join(THIS_FOLDER, 'data\\{}.xlsx'.format(filename))
+    print(my_file)
+    #df_input = pd.read_excel('wemedia\\data\\' + filename + '.xlsx')
+    df_input = pd.read_excel(my_file)
     print("file found")
     exit()
 except:
@@ -27,10 +31,13 @@ except:
     exit()
 '''
 
+
 print(os.listdir())
 print(os.listdir("wemedia"))
-df_input = pd.read_excel('\\wemedia\\data\\' + filename + '.xlsx')
 print(os.listdir("wemedia\\data\\"))
+my_file = os.path.join(THIS_FOLDER, 'data\\{}.xlsx'.format(filename))
+print(my_file)
+df_input = pd.read_excel(my_file)
 
 #helper functions
 def convert_string_to_list(text):
