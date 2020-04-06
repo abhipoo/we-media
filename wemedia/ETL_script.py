@@ -32,8 +32,8 @@ except:
 '''
 
 
-print(os.listdir())
-print(os.listdir("wemedia"))
+#print(os.listdir())
+#print(os.listdir("wemedia"))
 #print(os.listdir("wemedia\\data\\"))
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join(THIS_FOLDER, 'data/{}.xlsx'.format(filename))
@@ -122,7 +122,7 @@ def parse_into_topic_object(topic_string):
     try:
         topic_object = Topic.objects.get(title=topic_string)
         return topic_object
-    except topic.DoesNotExist:
+    except Topic.DoesNotExist:
         #persist new entry into db
         topic_object = Topic(title = topic_string)
         topic_object.save()
