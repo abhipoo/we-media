@@ -34,7 +34,8 @@ except:
 
 print(os.listdir())
 print(os.listdir("wemedia"))
-print(os.listdir("wemedia\\data\\"))
+#print(os.listdir("wemedia\\data\\"))
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join(THIS_FOLDER, 'data\\{}.xlsx'.format(filename))
 print(my_file)
 df_input = pd.read_excel(my_file)
