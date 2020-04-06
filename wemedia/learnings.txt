@@ -28,4 +28,14 @@ Challenges -
 How to keep style consistent across html pages ? 
 eg : Did i use <h4> or <h3> in the counterpart page ? Can a base template technique be used ?
 
+***********
+
+Setup -
+
+https://devcenter.heroku.com/articles/getting-started-with-python
+
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+
+For database access, go to : https://data.heroku.com/
+
 

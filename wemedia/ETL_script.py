@@ -2,6 +2,7 @@
 import pandas as pd
 import os
 import django
+import traceback
 
 os.environ["DJANGO_SETTINGS_MODULE"] = 'wemedia.settings'
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
@@ -13,8 +14,20 @@ from discuss.models import Topic, content
 #user input
 filename = input("Please input filename inside data folder (without extention) : ")
 
-df_input = pd.read_excel('data/' + filename + '.xlsx')
+'''
+#File pick test
+try:
+    print(os.listdir())
+    df_input = pd.read_excel('wemedia\\data\\' + filename + '.xlsx')
+    print("file found")
+    exit()
+except:
+    print("file not found")
+    print(traceback.format_exc())
+    exit()
+'''
 
+df_input = pd.read_excel('wemedia\\data\\' + filename + '.xlsx')
 
 #helper functions
 def convert_string_to_list(text):
