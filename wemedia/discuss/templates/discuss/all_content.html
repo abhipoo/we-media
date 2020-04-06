@@ -3,7 +3,21 @@
 {% block content %}
 <div class='col-lg-12'>
 	<div class='row'>
-		<div class='col-lg-6' id="Points">
+		<div class='col-md-6 order-lg-2' id="Counterpoints">
+			<br>
+
+			<h4>Add new recommendation</h4>
+
+			<br>
+			<form action="{% url 'create_content' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
+			<br>
+		</div>
+
+		<div class='col-md-6 order-lg-1' id="Points">
 			<br>
 
 			<h3>Recommendations</h3>
@@ -19,21 +33,7 @@
 			</li>
 			{% endfor %}
 			{% endif %}
-		</div>
-
-		<div class='col-lg-6' id="Counterpoints">
-			<br>
-
-			<h4>Add new recommendation</h4>
-
-			<br>
-			<form action="{% url 'create_content' %}" method="post">
-				{% csrf_token %}
-				{{ form }}
-				<input type="submit" value="Submit">
-			</form>
-			<br>
-		</div>
+		</div>	
 	</div>
 </div>
 {% endblock %}

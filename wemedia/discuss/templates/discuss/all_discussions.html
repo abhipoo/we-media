@@ -3,7 +3,20 @@
 {% block content %}
 <div class='col-lg-12'>
 	<div class='row'>
-		<div class='col-lg-6' id="Points">
+		<div class='col-md-6 order-lg-2' id="Counterpoints">
+			<br>
+			<h4>Start a new discussion</h4>
+
+			<br>
+
+			<form action="{% url 'create_discussion' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+
+		<div class='col-md-6 order-lg-1' id="Points">
 			<br>
 
 			<h3>Discussions</h3>
@@ -18,19 +31,6 @@
 
 			<br>
 
-		</div>
-
-		<div class='col-lg-6' id="Counterpoints">
-			<br>
-			<h4>Start a new discussion</h4>
-
-			<br>
-
-			<form action="{% url 'create_discussion' %}" method="post">
-				{% csrf_token %}
-				{{ form }}
-				<input type="submit" value="Submit">
-			</form>
 		</div>
 	</div>
 </div>
