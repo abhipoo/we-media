@@ -27,7 +27,8 @@ except:
     exit()
 '''
 
-df_input = pd.read_excel('wemedia\\data\\' + filename + '.xlsx')
+print(os.listdir())
+df_input = pd.read_excel('.\\wemedia\\data\\' + filename + '.xlsx')
 
 #helper functions
 def convert_string_to_list(text):

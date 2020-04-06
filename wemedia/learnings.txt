@@ -39,3 +39,10 @@ https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
 For database access, go to : https://data.heroku.com/
 
 
+**********
+
+Query -
+
+Delete all : Topic.objects.all().delete()
+
+
