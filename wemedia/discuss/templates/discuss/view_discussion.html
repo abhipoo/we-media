@@ -30,7 +30,11 @@
 
 			<h2>{{ comment.description }}</h2>
 
-			<p>Added by : </p><a href="{%url 'public_profile' comment.author.id%}">{{ comment.author.username }}</a>
+
+			<p>Added by : </p>
+			{% if comment.author %}
+			<a href="{%url 'public_profile' comment.author.id%}">{{ comment.author.username }}</a>
+			{% endif %}
 
 			<br>
 			<br>
