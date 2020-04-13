@@ -49,7 +49,7 @@ def public_profile(request, user_id):
 	'''
 	Displays public profile for this user id
 	'''
-	user_object = User.objects.filter(pk = 5).first()
+	user_object = User.objects.filter(pk = user_id).first()
 	discussions = user_object.comment_set.all()
 
 	context = {
