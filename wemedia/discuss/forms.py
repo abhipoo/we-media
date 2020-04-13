@@ -38,4 +38,4 @@ class SuggestionForm(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ('is_op', 'topics', 'contents')
+        exclude = ('is_op', 'topics', 'contents', 'author')

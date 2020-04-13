@@ -30,6 +30,8 @@
 
 			<h2>{{ comment.description }}</h2>
 
+			<p>Added by : </p><a href="{%url 'public_profile' comment.author.id%}">{{ comment.author.username }}</a>
+
 			<br>
 			<br>
 
@@ -52,8 +54,6 @@
 
 			<br>				
 		</div>
-
-
 
 		<div class='col-lg-6' id="Counterpoints">
 			<br>

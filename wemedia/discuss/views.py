@@ -216,6 +216,10 @@ def create_discussion(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.is_op = True
+            if request.user.is_authenticated:
+                post.author = request.user
+            #else:
+                #redirect to login page 
             post.save()
 
             #redirect to new created topic
@@ -238,6 +242,10 @@ def create_discussion_on_topic(request, topic_id):
         if form.is_valid():
             post = form.save(commit=False)
             post.is_op = True
+
+            if request.user.is_authenticated:
+                post.author = request.user
+            
             post.save()
 
             #get topic from topic id
@@ -265,6 +273,10 @@ def create_discussion_on_content(request, content_id):
         if form.is_valid():
             post = form.save(commit=False)
             post.is_op = True
+            
+            if request.user.is_authenticated:
+                post.author = request.user
+            
             post.save()
 
             #get topic from topic id
@@ -335,6 +347,10 @@ def add_point(request, comment_id):
     if form.is_valid():
         post = form.save(commit=False)
         post.is_op = False
+
+        if request.user.is_authenticated:
+            post.author = request.user
+
         post.save()
 
         add_relation(comment_id, post, 'P') #P denotes Point
@@ -351,6 +367,10 @@ def add_counterpoint(request, comment_id):
     if form.is_valid():
         post = form.save(commit=False)
         post.is_op = False
+
+        if request.user.is_authenticated:
+            post.author = request.user
+
         post.save()
 
         add_relation(comment_id, post, 'CP') #CP denotes Counterpoint

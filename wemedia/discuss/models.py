@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Topic(models.Model):
@@ -58,6 +59,7 @@ class Comment(models.Model):
     is_op = models.BooleanField()
     topics = models.ManyToManyField(Topic, blank = True, related_name = 'comments')
     contents = models.ManyToManyField(content, blank = True, related_name = 'comments')
+    author = models.ForeignKey(User, on_delete = models.SET_NULL, blank = True, null = True)
 
     def __str__(self):
         return self.description

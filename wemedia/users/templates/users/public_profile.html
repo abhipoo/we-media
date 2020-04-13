@@ -1,0 +1,24 @@
+{% extends 'discuss/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section col-lg-12">
+	<div class="media">
+		<img class="rounded-circle account-img" src="{{ user_object.profile.image.url }}">
+		<div class="media-body">
+			<h2 class="account-heading">{{ user_object.username }}</h2>
+		</div>
+	</div>
+
+	<div>
+		Discussions :
+		{%if discussions%}
+		{%for discussion in discussions%}
+		<li><a href="{% url 'discussion' discussion.id %}">{{discussion.description}}</a></li>
+		{%endfor%}
+		{%else%}
+		User hasn't participated in any discussions yet
+		{%endif%}
+	</div>
+</div>
+{% endblock %}

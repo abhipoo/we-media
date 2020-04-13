@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 def register(request):
@@ -42,6 +44,23 @@ def profile(request):
 		'p_form' : p_form
 	}
 	return render(request, 'users/profile.html', context)
+
+def public_profile(request, user_id):
+	'''
+	Displays public profile for this user id
+	'''
+	user_object = User.objects.filter(pk = 5).first()
+	discussions = user_object.comment_set.all()
+
+	context = {
+		'user_object' : user_object,
+		'discussions' : discussions
+	}
+
+	return render(request, 'users/public_profile.html', context)
+
+
+
 
 
 
