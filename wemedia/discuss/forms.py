@@ -6,7 +6,7 @@ class CreateTopicForm(forms.ModelForm):
         model = Topic
         exclude = ('description',)
 
-class CreateContentForm(forms.ModelForm):  
+class CreateContentForm(forms.ModelForm):
     class Meta:
         model = content
         exclude = ('contexts', 'topics', 'related_content', 'creator')
@@ -38,4 +38,5 @@ class SuggestionForm(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
+        fields = ['description']
         exclude = ('is_op', 'topics', 'contents', 'author')

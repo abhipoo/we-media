@@ -6,6 +6,11 @@
 
 	<!--CSS -->
 	<link href="{% static 'discuss/freelancer.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'discuss/main.css' %}">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
 </head>
 
 <body>
@@ -56,6 +61,38 @@
 
 	{% block content %}
 	{% endblock %}
+
+	<script>
+  $('*[id*=id_description]').summernote({
+    placeholder: '',
+    tabsize: 2,
+    height: 120,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+
+  $('*[id*=id_title]').summernote({
+    placeholder: '',
+    tabsize: 2,
+    height: 120,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+</script>
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="{% static 'discuss/vendor/jquery/jquery.min.js' %}"></script>

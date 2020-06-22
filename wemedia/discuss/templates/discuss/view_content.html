@@ -26,10 +26,10 @@
 			{%if discussions%}
 			<h4>Discussions :</h4>
 			{%for discussion in discussions%}
-			<li><a href = "{% url 'discussion' discussion.id %}">{{discussion.description}}</a></li>
+			<li><a href = "{% url 'discussion' discussion.id %}">{{discussion.description | safe}}</a></li>
 			{%endfor%}
 			{%endif%}
-			
+
 
 			<br>
 			<br>

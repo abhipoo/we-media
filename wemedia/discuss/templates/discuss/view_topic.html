@@ -1,6 +1,6 @@
 {% extends 'discuss/base.html' %}
 
-{% block content %}	
+{% block content %}
 <div class='col-lg-12'>
 	<div class='row'>
 		<div class='col-lg-6' id="Points">
@@ -54,7 +54,7 @@
 			<form action="{% url 'create_discussion_on_topic' topic.id %}" method="post">
 				{% csrf_token %}
 				{{ discussion_form }}
-				<input type="submit" value="Submit">
+				<input class="btn btn-outline-dark" type="submit" value="Submit">
 			</form>
 
 			<br>

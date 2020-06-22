@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '4ojlgnuxy=g7@!fv4^oo#o##&@ti(=
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['wemedia.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'we-media',
         'USER': 'postgres',
-        'PASSWORD': 'abhipoo@123',
+        'PASSWORD': os.environ['POSTGRESQL_PASSWORD'],
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

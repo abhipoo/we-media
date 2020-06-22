@@ -55,7 +55,7 @@ class suggestion(models.Model):
 
 #separate app
 class Comment(models.Model):
-    description = models.CharField(max_length = 10000)
+    description = models.TextField()
     is_op = models.BooleanField()
     topics = models.ManyToManyField(Topic, blank = True, related_name = 'comments')
     contents = models.ManyToManyField(content, blank = True, related_name = 'comments')

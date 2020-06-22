@@ -3,7 +3,7 @@
 {% block content %}
 <div class='col-lg-12'>
 	<div class='row'>
-		<div class='col-lg-6' id="Points">
+		<div class='col-lg-12' id="Points">
 			<br>
 			<h4>Discussion</h4>
 			<hr>
@@ -23,12 +23,12 @@
 			{%endif%}
 
 			{% if parent_id != -1  %}
-			<a href="{% url 'discussion' parent_id %}">Parent comment</a>	
+			<a href="{% url 'discussion' parent_id %}">Parent comment</a>
 			{% endif %}
 
 			<br>
 
-			<h2>{{ comment.description }}</h2>
+			<h2>{{ comment.description | safe }}</h2>
 
 
 			<p>Added by : </p>
@@ -44,24 +44,33 @@
 			<br>
 			<br>
 
+		</div>
+		<div class='col-lg-6'>
+			<br>
 			<h3>Points</h3>
 
 			<p>Add your point:</p>
 			<form action="{% url 'add_point' comment.id %}" method="post">
 				{% csrf_token %}
 				{{ form }}
-				<input type="submit" value="Submit">
+				<input class="btn btn-outline-dark" type="submit" value="Submit">
 			</form>
 
 			<br>
 
 			{% if points %}
+			<table class="table table-striped">
+				<tbody>
 			{% for comment in points %}
-			<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
+					<tr>
+						<td><a href="{% url 'discussion' comment.id %}">{{ comment.description | safe }}</a></td>
+					</tr>
 			{% endfor %}
+			</tbody>
+			</table>
 			{% endif %}
 
-			<br>				
+			<br>
 		</div>
 
 		<div class='col-lg-6' id="Counterpoints">
@@ -72,14 +81,20 @@
 			<form action="{% url 'add_counterpoint' comment.id %}" method="post">
 				{% csrf_token %}
 				{{ form }}
-				<input type="submit" value="Submit">
+				<input class="btn btn-outline-dark" type="submit" value="Submit">
 			</form>
 			<br>
 
 			{% if counterpoints %}
+			<table class="table table-striped">
+				<tbody>
 			{% for comment in counterpoints %}
-			<li><a href="{% url 'discussion' comment.id %}">{{ comment.description }}</a></li>
+					<tr>
+						<td><a href="{% url 'discussion' comment.id %}">{{ comment.description | safe }}</a></td>
+					</tr>
 			{% endfor %}
+			</tbody>
+			</table>
 			{% endif %}
 
 			<br>

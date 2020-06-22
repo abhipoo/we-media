@@ -12,7 +12,7 @@
 			<form action="{% url 'create_discussion' %}" method="post">
 				{% csrf_token %}
 				{{ form }}
-				<input type="submit" value="Submit">
+				<input class="btn btn-outline-dark" type="submit" value="Submit">
 			</form>
 		</div>
 
@@ -25,7 +25,7 @@
 
 			{% if discussions %}
 			{% for discussion in discussions %}
-			<li><a href="{% url 'discussion' discussion.id %}">{{ discussion.description }}</a></li>
+			<li><a href="{% url 'discussion' discussion.id %}">{{ discussion.description | safe }}</a></li>
 			{% endfor %}
 			{% endif %}
 
@@ -34,4 +34,6 @@
 		</div>
 	</div>
 </div>
+
+
 {% endblock %}
