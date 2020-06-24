@@ -33,13 +33,13 @@ def create_topic(request):
     context = {
         'form' : form
     }
-    
+
     return render(request, 'discuss/create_topic.html', context)
 
 def view_topic(request, topic_id):
     #return HttpResponse("View discussion for id " + str(topic_id))
     topic_object = Topic.objects.get(pk = topic_id)
-    
+
     #form = CreateTopicForm()
 
     #points = get_points_of_topic(topic_id)
@@ -54,7 +54,7 @@ def view_topic(request, topic_id):
 
     context = {
         'topic' : topic_object,
-        #'form' : form, 
+        #'form' : form,
         #'points' : points,
         #'counterpoints' : counterpoints,
         'recommendations' : recommendations,
@@ -101,7 +101,7 @@ def create_content(request):
     context = {
         'form' : form
     }
-    
+
     return render(request, 'discuss/create_content.html', context)
 
 def view_content(request, content_id):
@@ -144,7 +144,7 @@ def ask_recommendation(request):
         if form.is_valid():
             ask_form = form.save(commit=False)
             #ask_form.user = request.user
-
+            print(ask_form)
             ask_form.save()
             form.save_m2m() # needed since using commit=False
 
@@ -158,7 +158,7 @@ def ask_recommendation(request):
     context = {
         'form' : form
     }
-    
+
     return render(request, 'discuss/ask_recommendation.html', context)
 
 def view_ask(request, ask_id):
@@ -219,7 +219,7 @@ def create_discussion(request):
             if request.user.is_authenticated:
                 post.author = request.user
             #else:
-                #redirect to login page 
+                #redirect to login page
             post.save()
 
             #redirect to new created topic
@@ -245,7 +245,7 @@ def create_discussion_on_topic(request, topic_id):
 
             if request.user.is_authenticated:
                 post.author = request.user
-            
+
             post.save()
 
             #get topic from topic id
@@ -273,10 +273,10 @@ def create_discussion_on_content(request, content_id):
         if form.is_valid():
             post = form.save(commit=False)
             post.is_op = True
-            
+
             if request.user.is_authenticated:
                 post.author = request.user
-            
+
             post.save()
 
             #get topic from topic id
@@ -301,7 +301,7 @@ def create_discussion_on_content(request, content_id):
 def view_discussion(request, comment_id):
     #return HttpResponse("View discussion for id " + str(topic_id))
     comment_object = Comment.objects.get(pk = comment_id)
-    
+
     form = CreateCommentForm()
 
     points = get_points_of_comment(comment_id)
@@ -318,7 +318,7 @@ def view_discussion(request, comment_id):
 
     context = {
         'comment' : comment_object,
-        'form' : form, 
+        'form' : form,
         'points' : points,
         'counterpoints' : counterpoints,
         'parent_id' : parent_id,
@@ -399,7 +399,7 @@ def add_relation(from_comment_id, to_comment, relation_type):
     #get source object #Help - Can this unnecessary call to DB be avoided ?
     from_comment = Comment.objects.get(pk = from_comment_id)
 
-    #Persists relation between two entities    
+    #Persists relation between two entities
     r = Comment_relation(source = from_comment, target = to_comment, relation_type = relation_type)
     r.save()
 
@@ -414,14 +414,14 @@ def get_points_of_comment(source_id):
 def get_counterpoints_of_comment(source_id):
     #Get a list of point ids for a topic
     cp_target_ids = list(Comment_relation.objects.filter(source = source_id).filter(relation_type = 'CP').values_list('target', flat = True))
-    
+
     #Returns query set of those point topics
     counterpoints = Comment.objects.filter(id__in = cp_target_ids)
 
     return counterpoints
 
 def get_parent_comment_id(comment_id):
-    try: #Help - simpler querying 
+    try: #Help - simpler querying
         return Comment_relation.objects.filter(target = comment_id).values('source').get()['source']
     except:
         return -1

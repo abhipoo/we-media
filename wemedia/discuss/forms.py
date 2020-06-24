@@ -23,16 +23,16 @@ class CreateContentForm(forms.ModelForm):
 
 #separate app - Suggestions
 class AskRecommendationForm(forms.ModelForm):
-    content_choices = forms.ModelMultipleChoiceField(queryset=content_types.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+    # content_choices = forms.ModelMultipleChoiceField(queryset=content_types.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = ask
-        exclude = ('',)
+        fields = ['description']
 
 class SuggestionForm(forms.ModelForm):
     class Meta:
         model = suggestion
-        exclude = ('ask', )
+        fields = ['description']
 
 #separate app - Discussions
 class CreateCommentForm(forms.ModelForm):

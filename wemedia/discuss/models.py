@@ -45,11 +45,14 @@ class content_types(models.Model):
         return self.title
 
 class ask(models.Model):
-    content_choices = models.ManyToManyField(content_types)
-    description = models.CharField(max_length = 1000, default=None, blank=True, null=True)
+    content_choices = models.ManyToManyField(content_types, blank=True)
+    description = models.TextField(max_length = 1000, default="", blank=True, null=True)
+
+    def __str__(self):
+        return self.description
 
 class suggestion(models.Model):
-    description = models.CharField(max_length = 10000)
+    description = models.TextField()
     ask = models.ForeignKey(ask, on_delete = models.CASCADE)
 
 
