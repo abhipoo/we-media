@@ -21,7 +21,9 @@
 			<!-- <li><a href="{% url 'ask' ask.id %}">{{ ask.description | safe}}</a></li> -->
 			<!-- <div class="col"> -->
 				<div class="card">
-				  <img src="{{ask.image.url}}" class="card-img-top" alt="{{ask.description}}">
+					{% if ask.image != "default.jpg" %}
+				  		<img src="{{ask.image.url}}" class="card-img-top" alt="{{ask.description}}">
+				  	{% endif %}
 				  <div class="card-body">
 				    <h5 class="card-title">{{ask.description | safe}}</h5>
 				    <!-- <p class="card-text">Add Some Description here.</p> -->
@@ -32,6 +34,7 @@
 
 			{% endfor %}
 			{% endif %}
+
 		</div>
 		<!-- </div> -->
 

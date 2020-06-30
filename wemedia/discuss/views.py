@@ -142,8 +142,11 @@ def ask_recommendation(request):
         if form.is_valid():
             ask_form = form.save()
             #ask_form.user = request.user
-            img = request.FILES['img']
-            ask_form.image = img
+            try:
+                img = request.FILES['img']
+                ask_form.image = img
+            except:
+                pass
             ask_form.save()
             # ask_form.save()
             # form.save_m2m() # needed since using commit=False

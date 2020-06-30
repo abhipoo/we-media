@@ -48,7 +48,7 @@ class content_types(models.Model):
 class ask(models.Model):
     content_choices = models.ManyToManyField(content_types, blank=True)
     description = models.TextField(max_length = 1000, default="", blank=True, null=True)
-    image = models.ImageField(upload_to="ask_images", blank=True)
+    image = models.ImageField(upload_to="ask_images", default="default.jpg", blank=True)
 
     def __str__(self):
         return f'{self.description}'
