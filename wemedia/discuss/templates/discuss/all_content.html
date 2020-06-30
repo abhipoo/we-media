@@ -1,39 +1,40 @@
 {% extends 'discuss/base.html' %}
 
 {% block content %}
-<div class='col-lg-12'>
-	<div class='row'>
-		<div class='col-lg-5 order-lg-2' id="Counterpoints">
+
+<style type="text/css">
+.card-group [class*='col-'] {
+  float:none;
+}
+</style>
+
+<div class="container-fluid" id="Points" style="overflow-x: hidden;">
 			<br>
 
-			<h4>Add new recommendation</h4>
+			<h3>Recommendation requests</h3>
 
 			<br>
-			<form action="{% url 'create_content' %}" method="post">
-				{% csrf_token %}
-				{{ form }}
-				<input type="submit" value="Submit">
-			</form>
-			<br>
-		</div>
+			<!-- <div class="row"> -->
+				<div class="card-columns">
+			{% if asks %}
+			{% for ask in asks %}
+			<!-- <li><a href="{% url 'ask' ask.id %}">{{ ask.description | safe}}</a></li> -->
+			<!-- <div class="col"> -->
+				<div class="card">
+				  <img src="{{ask.image.url}}" class="card-img-top" alt="{{ask.description}}">
+				  <div class="card-body">
+				    <h5 class="card-title">{{ask.description | safe}}</h5>
+				    <!-- <p class="card-text">Add Some Description here.</p> -->
+				    <a href="{% url 'ask' ask.id %}" class="btn btn-primary stretched-link"">Recommend</a>
+				  </div>
+				</div>
+			<!-- </div> -->
 
-		<div class='col-lg-7 order-lg-1' id="Points">
-			<br>
-
-			<h3>Recommendations</h3>
-
-			<br>
-
-			{% if contents %}
-			{% for content in contents %}
-			<li><a href="{% url 'content' content.id %}">{{ content.title }}</a> 
-				{% if content.creator %}
-				by <a href="#">{{ content.creator }}</a>
-				{% endif %}
-			</li>
 			{% endfor %}
 			{% endif %}
-		</div>	
-	</div>
-</div>
+		</div>
+		<!-- </div> -->
+
+			<br>
+		</div>
 {% endblock %}

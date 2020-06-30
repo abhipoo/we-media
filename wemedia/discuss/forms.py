@@ -23,11 +23,12 @@ class CreateContentForm(forms.ModelForm):
 
 #separate app - Suggestions
 class AskRecommendationForm(forms.ModelForm):
+    img = forms.ImageField()
     # content_choices = forms.ModelMultipleChoiceField(queryset=content_types.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = ask
-        fields = ['description']
+        fields = ['img', 'description']
 
 class SuggestionForm(forms.ModelForm):
     class Meta:

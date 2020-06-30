@@ -128,11 +128,9 @@ def view_content(request, content_id):
     return render(request, 'discuss/view_content.html', context)
 
 def show_all_content(request):
-    contents = content.objects.all()
-    form = CreateContentForm(request.POST)
+    contents = ask.objects.all().order_by('id')
     context = {
-    'contents' : contents,
-    'form' : form
+    'asks' : contents,
     }
     return render(request, 'discuss/all_content.html', context)
 
@@ -140,13 +138,15 @@ def show_all_content(request):
 def ask_recommendation(request):
     #return HttpResponse("Ask for a content recommendation")
     if request.method=='POST':
-        form = AskRecommendationForm(request.POST)
+        form = AskRecommendationForm(request.POST, request.FILES)
         if form.is_valid():
-            ask_form = form.save(commit=False)
+            ask_form = form.save()
             #ask_form.user = request.user
-            print(ask_form)
+            img = request.FILES['img']
+            ask_form.image = img
             ask_form.save()
-            form.save_m2m() # needed since using commit=False
+            # ask_form.save()
+            # form.save_m2m() # needed since using commit=False
 
             return view_ask(request, ask_form.id)
         else:
@@ -198,10 +198,8 @@ def add_suggestion(request, ask_id):
 
 def show_all_asks(request):
     #return HttpResponse("Shows all content")
-    asks = ask.objects.all()
     form = AskRecommendationForm()
     context = {
-        'asks' : asks,
         'form' : form
     }
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 # Create your models here.
 class Topic(models.Model):
@@ -18,14 +19,14 @@ class Topic(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 class context(models.Model):
     context_url = models.CharField(max_length = 1000)
     #contents = models.ManyToManyField(content)
 
     def __str__(self):
-        return self.context_url
+        return f'{self.context_url}'
 
 class content(models.Model):
     title = models.CharField(max_length = 1000, default=None, blank=True, null=True)
@@ -35,21 +36,31 @@ class content(models.Model):
     related_content = models.ManyToManyField("self", blank = True)
 
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 #separate app
 class content_types(models.Model):
     title = models.CharField(max_length = 100)
 
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 class ask(models.Model):
     content_choices = models.ManyToManyField(content_types, blank=True)
     description = models.TextField(max_length = 1000, default="", blank=True, null=True)
+    image = models.ImageField(upload_to="ask_images", blank=True)
 
     def __str__(self):
-        return self.description
+        return f'{self.description}'
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
+    #     with Image.open(self.image.path) as img:
+    #         if img.height > 300 or img.width > 300:
+    #             output_size =(300, 300)
+    #             img.thumbnail(output_size)
+    #             img.save(self.image.path)
 
 class suggestion(models.Model):
     description = models.TextField()
@@ -65,12 +76,15 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete = models.SET_NULL, blank = True, null = True)
 
     def __str__(self):
-        return self.description
+        return f'{self.description}'
 
 class Comment_relation(models.Model):
     source = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name = 'sources')
     target = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name = 'targets')
     relation_type = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return f'{self.related_type}'
 
 
 
