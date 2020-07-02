@@ -21,6 +21,32 @@
 			<h4>Description : </h4>
 
 			<h6>{{ask.description | safe}}</h6>
+			<p>Loved by {{ask.vote}} people.</p>
+
+			<style type="text/css">
+				.vote{
+					color: #eb4034;
+					font-size: 2.5em;
+					text-decoration: none;
+					margin: 0.5em 0.5em 0.5em 0em;
+				}
+
+				.vote:hover{
+					animation: beat 0.20s 4 alternate;
+				}
+
+				@keyframes beat{
+					from{ font-size: 2.5em }
+					to { font-size: 3em }
+				}
+
+				.vote_a:hover{
+					text-decoration: none;
+				}
+			</style>
+
+			<a class="vote_a" href="{% url 'vote_ask' ask_id=ask.id vote_type='upvote' %}"><span class="vote">❤️</span></a>
+			<a class="vote_a" href="{% url 'vote_ask' ask_id=ask.id vote_type='downvote' %}"><span class="vote">💔</span></a>
 
 			<br>
 

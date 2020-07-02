@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .forms import CreateTopicForm, CreateContentForm, AskRecommendationForm, SuggestionForm, CreateCommentForm
 from .models import Topic, content, content_types, ask, suggestion, Comment, Comment_relation
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 #Create your views here.
 
@@ -128,7 +130,7 @@ def view_content(request, content_id):
     return render(request, 'discuss/view_content.html', context)
 
 def show_all_content(request):
-    contents = ask.objects.all().order_by('id')
+    contents = ask.objects.all().order_by('-vote')
     context = {
     'asks' : contents,
     }
@@ -185,6 +187,28 @@ def view_ask(request, ask_id):
 
     return render(request, 'discuss/view_ask.html', context)
 
+@login_required
+def vote_ask(request, ask_id, vote_type):
+    a = ask.objects.get(id=ask_id)
+    if a in request.user.profile.asks_voted.all():
+        messages.error(request, "You have already Voted on this.")
+        return view_ask(request, ask_id)
+
+    request.user.profile.asks_voted.add(a)
+    if vote_type == 'downvote':
+        a.vote -= 1
+
+    elif vote_type == 'upvote':
+        a.vote += 1
+
+    else:
+        messages.error(request, "Seems Like an invalid response. Try again later.")
+        return view_ask(request, ask_id)
+
+    a.save()
+
+    messages.success(request, "Your vote has been successfully registered.")
+    return view_ask(request, ask_id)
 
 def add_suggestion(request, ask_id):
     #return HttpResponse("Button for adding point")
