@@ -45,8 +45,7 @@
 				}
 			</style>
 
-			<a class="vote_a" href="{% url 'vote_ask' ask_id=ask.id vote_type='upvote' %}"><span class="vote">❤️</span></a>
-			<a class="vote_a" href="{% url 'vote_ask' ask_id=ask.id vote_type='downvote' %}"><span class="vote">💔</span></a>
+			<a class="vote_a" href="{% url 'vote_ask' ask_id=ask.id %}"><span class="vote">❤️</span></a>
 
 			<br>
 

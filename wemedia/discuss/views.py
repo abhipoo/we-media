@@ -188,23 +188,14 @@ def view_ask(request, ask_id):
     return render(request, 'discuss/view_ask.html', context)
 
 @login_required
-def vote_ask(request, ask_id, vote_type):
+def vote_ask(request, ask_id):
     a = ask.objects.get(id=ask_id)
     if a in request.user.profile.asks_voted.all():
-        messages.error(request, "You have already Voted on this.")
+        messages.warning(request, "You have already Voted on this.")
         return view_ask(request, ask_id)
 
     request.user.profile.asks_voted.add(a)
-    if vote_type == 'downvote':
-        a.vote -= 1
-
-    elif vote_type == 'upvote':
-        a.vote += 1
-
-    else:
-        messages.error(request, "Seems Like an invalid response. Try again later.")
-        return view_ask(request, ask_id)
-
+    a.vote += 1
     a.save()
 
     messages.success(request, "Your vote has been successfully registered.")
